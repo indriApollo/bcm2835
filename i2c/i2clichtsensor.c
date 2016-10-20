@@ -12,7 +12,7 @@
 #define CHIPON 0x03
 #define ADC1LOW 0x0e
 
-int flag = 1;
+volatile int flag = 1;
 
 void sighandler(int signum);
 
@@ -39,8 +39,7 @@ int main() {
     while(flag) {
 	char buf[] = {(CMDWORD | ADC1LOW)};
         char rec_buf[16]; //2 x 8bit regs
-        
-bcm2835_i2c_read_register_rs(buf,rec_buf,sizeof(buf)+sizeof(rec_buf));
+        bcm2835_i2c_read_register_rs(buf,rec_buf,sizeof(buf)+sizeof(rec_buf));
         printf("%i\n", rec_buf[0] + rec_buf[1]);
         sleep(1);
     }
@@ -56,4 +55,3 @@ void sighandler(int signum)
     printf("recieved signal %s\n", strsignal(signum));
     flag = 0;
 }
-
