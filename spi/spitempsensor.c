@@ -34,7 +34,7 @@ int main() {
     bcm2835_spi_transfern(continuous_mode, sizeof(continuous_mode));
 
     while(flag) {
-       char reading[]= {0x00,0x00}; //send 2 bytes to het 2 bytes in return
+       char reading[]= {0x00,0x00}; //send 2 bytes to get 2 bytes in return
        bcm2835_spi_transfern(reading, sizeof(reading));
        int16_t temp = reading[1]|(reading[0]<<8); //LSB or shift left 8 MSB
        printf("%f deg celsius\n",(double)temp/128.0);
